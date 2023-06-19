@@ -1,4 +1,4 @@
-from utils.utils import get_json, get_list_complited, refactoring_date, hide_numbers
+from utils import get_json, get_list_complited, refactoring_date, refactoring_transaction
 from cls.class_ import Transaction
 
 json_file = "files/operations.json"
@@ -32,5 +32,5 @@ print(a[0]._id)
 
 for i in range(5):
     print(refactoring_date(a, i), a[i].description)
-    print(hide_numbers(a[i].from_), '->', hide_numbers(a[i].to))
+    print(refactoring_transaction(a[i].from_), '->', refactoring_transaction(a[i].to))
     print(a[i].amount, a[i].name, '\n')

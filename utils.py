@@ -25,8 +25,8 @@ def refactoring_date(date_, i):
     return str(date_[i].date[8:10]) + '.' + str(date_[i].date[5:7]) + '.' + str(date_[i].date[:4])
 
 
-def hide_numbers(count):
+def refactoring_transaction(count):
     if "Счет" in count:
-        return count[:-20] + '**' + count[-4:]
+        return str(count[:-20] + '**' + count[-4:])
     else:
         return count[:-16] + count[-16:-12] + ' ' + count[-12:-10] + '** **** ' + count[-4:]
