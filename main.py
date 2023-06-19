@@ -3,34 +3,32 @@ from cls.class_ import Transaction
 
 json_file = "files/operations.json"
 
-f = get_json(json_file)
+list_operation = get_json(json_file)
 
-a = get_list_complited(f)
+list_complited = get_list_complited(list_operation)
 
-print(a)
-
+# список объектов класса Transaction
 list_oject = []
 
-c = 0
-
-for i in a:
-    c += 1
-    print(i["id"])
-    list_oject.append(Transaction(i["id"], i["state"], i["date"],
-                                  i["operationAmount"]["amount"],
-                                  i["operationAmount"]["currency"]["name"],
-                                  i["description"], i["from"], i["to"]
+# запись объектов Transaction и добавление в список выше
+for data in list_complited:
+    list_oject.append(Transaction(data["id"], data["state"], data["date"],
+                                  data["operationAmount"]["amount"],
+                                  data["operationAmount"]["currency"]["name"],
+                                  data["description"], data["from"], data["to"]
                                   ))
 
-print(c)
+# подсмотренная в инете функция сортировки объектов в списке по полю класса (date) в режиме reverse
+list_complited = sorted(list_oject, key=lambda oject: oject.date, reverse=True)
 
-#print(list_oject[2].__repr__)
+# вывод последних 5-ти выполненных по дате операций.(первые 5 в отсортированном списке выше)
+for data in range(5):
 
-a = sorted(list_oject, key=lambda list_oject: list_oject.date, reverse=True)
-print("ok")
-print(a[0]._id)
+    # информация о дате совершения операции, описание типа перевода
+    print(refactoring_date(list_complited, data), list_complited[data].description)
 
-for i in range(5):
-    print(refactoring_date(a, i), a[i].description)
-    print(refactoring_transaction(a[i].from_), '->', refactoring_transaction(a[i].to))
-    print(a[i].amount, a[i].name, '\n')
+    # откуда (может отсутстовать), куда
+    print(refactoring_transaction(list_complited[data].from_), '->', refactoring_transaction(list_complited[data].to))
+
+    # сумма операции и валюта
+    print(list_complited[data].amount, list_complited[data].name, '\n')
